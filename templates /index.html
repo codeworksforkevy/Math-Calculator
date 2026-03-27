@@ -55,6 +55,7 @@
                 <small>Kaynak: Oxford Mathematics</small>
             </article>
         </section>
+        
     </main>
 
     <script>
@@ -65,5 +66,44 @@
             document.getElementById('ph_result').innerText = `Sonuç: pH ${data.sonuc}`;
         }
     </script>
+    <section class="card">
+    <h2>📐 Denklem Çözücü (ax + by = c)</h2>
+    <div class="input-row">
+        <input type="number" id="a1" placeholder="a1">x + <input type="number" id="b1" placeholder="b1">y = <input type="number" id="c1" placeholder="c1">
+    </div>
+    <div class="input-row">
+        <input type="number" id="a2" placeholder="a2">x + <input type="number" id="b2" placeholder="b2">y = <input type="number" id="c2">
+    </div>
+    <button onclick="solveEquation()">Sistemi Çöz</button>
+    <p id="eq_result" class="result"></p>
+</section>
+
+<section class="card">
+    <h2>📈 Üstel Artış (a^x)</h2>
+    <input type="number" id="base" placeholder="Taban (a)">
+    <input type="number" id="exp" placeholder="Üs (x)">
+    <button onclick="calculatePower()">Hesapla</button>
+    <p id="pow_result" class="result"></p>
+</section>
+
+<script>
+async function solveEquation() {
+    const params = new URLSearchParams({
+        a1: document.getElementById('a1').value, b1: document.getElementById('b1').value, c1: document.getElementById('c1').value,
+        a2: document.getElementById('a2').value, b2: document.getElementById('b2').value, c2: document.getElementById('c2').value
+    });
+    const res = await fetch(`/hesapla/denklem?${params}`);
+    const data = await res.json();
+    document.getElementById('eq_result').innerText = data.hata ? data.hata : `Çözüm: x=${data.x}, y=${data.y}`;
+}
+
+async function calculatePower() {
+    const b = document.getElementById('base').value;
+    const e = document.getElementById('exp').value;
+    const res = await fetch(`/hesapla/ustel?taban=${b}&us=${e}`);
+    const data = await res.json();
+    document.getElementById('pow_result').innerText = `Sonuç: ${data.sonuc}`;
+}
+</script>
 </body>
 </html>
