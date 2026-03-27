@@ -15,6 +15,44 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import math
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import math
+
+app = FastAPI(title="Linguist's Lab: Academic Engine")
+
+# Statik ve Template ayarları
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+# --- GELİŞMİŞ API HESAPLAYICILAR ---
+
+@app.get("/api/ph")
+def hesapla_ph(h: float):
+    if h <= 0: return {"sonuc": "Hata: Derişim > 0 olmalı"}
+    return {"sonuc": round(-math.log10(h), 2)}
+
+@app.get("/api/hiz")
+def hesapla_hiz(x: float = None, v: float = None, t: float = None):
+    try:
+        if x is None: return {"sonuc": round(v * t, 2), "birim": "birim yol"}
+        if v is None: return {"sonuc": round(x / t, 2), "birim": "birim hız"}
+        if t is None: return {"sonuc": round(x / v, 2), "birim": "birim zaman"}
+    except: return {"sonuc": "Hata"}
+
+@app.get("/api/isci")
+def hesapla_isci(sureler: str):
+    try:
+        t_list = [float(s) for s in sureler.split(",")]
+        kapasite = sum(1/t for t in t_list)
+        return {"sonuc": round(1 / kapasite, 2)}
+    except: return {"sonuc": "Hata: Geçersiz giriş"}
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 # --- PROBLEM ÇÖZÜCÜ MODÜLÜ ---
 
 @app.get("/api/hiz_problemi")
