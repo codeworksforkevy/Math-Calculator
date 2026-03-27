@@ -1,6 +1,28 @@
 from fastapi import FastAPI, HTTPException
 import math
 from typing import Optional
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import math
+
+app = FastAPI()
+
+# Statik ve Template klasörlerini tanıtıyoruz
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/hesapla/ph")
+def get_ph(h_derisimi: float):
+    if h_derisimi <= 0: return {"sonuc": "Hata!"}
+    return {"sonuc": round(-math.log10(h_derisimi), 2)}
+
+# Diğer mol ve denklem fonksiyonlarını buraya eklemeye devam edebilirsin...
 
 app = FastAPI(title="Linguist's Lab API", description="TYT-AYT Fen ve Matematik Hesaplayıcı")
 
