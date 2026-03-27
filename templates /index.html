@@ -6,386 +6,259 @@
     <title>Linguist's Lab | Akademi & Hesaplama</title>
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .input-row { margin-bottom: 0.5rem; }
+        .input-row input { width: 80px; margin: 0 4px; }
+        .calc-box { background: #ecf0f1; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #3498db; }
+        .calc-box h4 { margin-top: 0; }
+        .bio { font-style: italic; color: #7f8c8d; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .accordion-header { background: #2c3e50; color: white; }
+        .accordion-header:hover { background: #34495e; }
+        header { text-align: center; padding: 40px; background: #2c3e50; color: white; }
+        header p { margin: 0; opacity: 0.8; }
+    </style>
 </head>
 <body>
-    <nav>
+
+    <header>
         <h1>Linguist's Lab</h1>
-        <p>TYT-AYT Fen & Matematik Motoru</p>
-    </nav>
+        <p>Akademik Kaynaklı (Harvard, MIT, Oxford) TYT-AYT Bilgi Motoru</p>
+    </header>
 
     <main class="container">
+
+        <!-- ===== CHEMISTRY CALCULATOR ===== -->
         <section class="card">
             <h2>🧪 Kimyasal Hesaplayıcı</h2>
-            <div class="input-group">
-                <label>H+ Derişimi (mol/L):</label>
-                <input type="number" id="h_input" placeholder="Örn: 0.001">
+
+            <div class="input-group" style="margin-bottom:1rem;">
+                <label>H⁺ Derişimi (mol/L):</label><br>
+                <input type="number" id="h_input" placeholder="Örn: 0.001" step="any">
                 <button onclick="calculatePH()">pH Hesapla</button>
+                <p id="ph_result" class="result"></p>
             </div>
-            <p id="ph_result" class="result"></p>
+
+            <div class="input-group">
+                <label>Mol Hesaplama (n = m / Ma):</label><br>
+                <input type="number" id="mol_kutle" placeholder="Kütle (g)" step="any">
+                <input type="number" id="mol_ma" placeholder="Mol Kütlesi (g/mol)" step="any">
+                <button onclick="calculateMol()">Hesapla</button>
+                <p id="mol_result" class="result"></p>
+            </div>
         </section>
 
+        <!-- ===== MATH CALCULATORS ===== -->
+        <section class="content-grid">
+            <div class="card">
+                <h2>📐 Denklem Çözücü (ax + by = c)</h2>
+                <div class="input-row">
+                    <input type="number" id="a1" placeholder="a1"> x +
+                    <input type="number" id="b1" placeholder="b1"> y =
+                    <input type="number" id="c1" placeholder="c1">
+                </div>
+                <div class="input-row">
+                    <input type="number" id="a2" placeholder="a2"> x +
+                    <input type="number" id="b2" placeholder="b2"> y =
+                    <input type="number" id="c2" placeholder="c2">
+                </div>
+                <button onclick="solveEquation()">Sistemi Çöz</button>
+                <p id="eq_result" class="result"></p>
+            </div>
+
+            <div class="card">
+                <h2>📈 Üstel Fonksiyon (a^x)</h2>
+                <input type="number" id="base" placeholder="Taban (a)" step="any">
+                <input type="number" id="exp_val" placeholder="Üs (x)" step="any">
+                <button onclick="calculatePower()">Hesapla</button>
+                <p id="pow_result" class="result"></p>
+            </div>
+        </section>
+
+        <!-- ===== INFO CARDS ===== -->
         <section class="content-grid">
             <article class="info-card">
                 <h3>Limit ve Süreklilik</h3>
                 <p>Limit, bir fonksiyonun bir noktaya yaklaşırken ulaştığı eğilimdir. Süreklilik için limitin fonksiyon değerine eşit olması gerekir.</p>
-                
-
-[Image of limit and continuity graph]
-
                 <small>Kaynak: MIT OpenCourseWare</small>
             </article>
-
             <article class="info-card">
                 <h3>Asit-Baz Kuramları</h3>
                 <p>Brønsted-Lowry'e göre asit proton veren, baz ise proton alandır. Lewis kuramı ise elektron çifti transferine odaklanır.</p>
-                
-
-[Image of Brønsted-Lowry acid-base theory diagram]
-
                 <small>Kaynak: Harvard Chemistry</small>
             </article>
-
             <article class="info-card">
                 <h3>Türev ve Teğet Eğimi</h3>
                 <p>Bir eğrinin üzerindeki belirli bir noktadan geçen teğetin eğimi, fonksiyonun o noktadaki türevine eşittir.</p>
-                
-
-[Image of derivative as slope of tangent line]
-
                 <small>Kaynak: Oxford Mathematics</small>
             </article>
         </section>
-        
+
+        <!-- ===== ACCORDION: ACADEMIC TOPICS ===== -->
+        <section class="card">
+            <h2>📚 Akademik Konu Anlatımları (TYT-AYT)</h2>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    📐 Trigonometri: Üçgenlerin Gizli Dili <span>+</span>
+                </button>
+                <div class="accordion-content">
+                    <p><strong>Basit Örnek:</strong> Bir ağacın boyunu ölçmek istiyorsun ama tepeye çıkamıyorsun. Gölge uzunluğunu ve güneşin açısını biliyorsan <strong>Tan(α)</strong> ile hesaplayabilirsin.</p>
+                    <p><strong>Akademik Not (MIT):</strong> Birim çember üzerindeki her nokta (cosθ, sinθ) koordinatlarına sahiptir. Pisagor teoremi burada <em>sin²θ + cos²θ = 1</em> olarak karşımıza çıkar.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    📈 Türev ve İntegral: Değişimin Matematiği <span>+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="bio">Bilim İnsanı: Augustin-Louis Cauchy (Analizin babası)</div>
+                    <p><strong>Türev:</strong> Arabanın o anki hız göstergesidir.</p>
+                    <p><strong>İntegral:</strong> Arabanın o ana kadar aldığı toplam yoldur.</p>
+                    <p><strong>Kural:</strong> xⁿ ifadesinin türevi n·xⁿ⁻¹ iken, integrali (xⁿ⁺¹)/(n+1) + C'dir.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    🧪 Kimyasal Bağlar: Atomların Sosyal Hayatı <span>+</span>
+                </button>
+                <div class="accordion-content">
+                    <p><strong>İyonik Bağ:</strong> Bir atomun diğerine tamamen elektron vermesidir. Örn: NaCl (Tuz).</p>
+                    <p><strong>Kovalent Bağ:</strong> İki atomun elektronu ortaklaşa kullanmasıdır. Örn: H₂O (Su).</p>
+                    <p><strong>Akademik Not (Harvard):</strong> Bağın türünü atomlar arasındaki elektronegatiflik farkı belirler.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    🚗 Problemler: Hız, İşçi, Havuz <span>+</span>
+                </button>
+                <div class="accordion-content">
+                    <p><strong>Linguist Note:</strong> "Birbirine doğru gelme" = Hızları topla (V₁ + V₂). "Kovalama" = Hızları çıkar.</p>
+
+                    <div class="calc-box">
+                        <h4>🚗 Hız Hesaplayıcı (x = v · t)</h4>
+                        <input type="number" id="yol" placeholder="Yol (x)" step="any">
+                        <input type="number" id="hiz_val" placeholder="Hız (v)" step="any">
+                        <input type="number" id="zaman_val" placeholder="Zaman (t)" step="any">
+                        <button onclick="solveSpeed()">Eksik Olanı Bul</button>
+                        <p id="speed_res" class="result"></p>
+                    </div>
+
+                    <div class="calc-box">
+                        <h4>👷 İşçi/Havuz Hesaplayıcı</h4>
+                        <input type="text" id="workers" placeholder="Süreleri virgülle ayır (örn: 3,6,12)" style="width:240px;">
+                        <button onclick="solveWorker()">Birlikte Kaç Saatte?</button>
+                        <p id="worker_res" class="result"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    🌿 Organik Kimya: Karbon Dünyası <span>+</span>
+                </button>
+                <div class="accordion-content">
+                    <p><strong>Lego Mantığı:</strong> Karbon her zaman 4 bağ yapar. -OH gelirse Alkol, -COOH gelirse Asit olur.</p>
+                    <p><em>Akademik Not:</em> Hibritleşme teorisi molekül geometrisini belirler.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    💨 Gazlar: PV = nRT <span>+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Sıcaklık artarsa gaz tanecikleri daha hızlı hareket eder ve basınç artar. İdeal gaz yasası dört değişkeni bir arada ifade eder: P (basınç), V (hacim), n (mol), T (sıcaklık).</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <script>
+        // --- Accordion ---
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+            btn.querySelector('span').innerText = content.style.display === "block" ? "−" : "+";
+        }
+
+        // --- pH ---
         async function calculatePH() {
             const h = document.getElementById('h_input').value;
             const res = await fetch(`/hesapla/ph?h_derisimi=${h}`);
             const data = await res.json();
-            document.getElementById('ph_result').innerText = `Sonuç: pH ${data.sonuc}`;
+            document.getElementById('ph_result').innerText = data.detail
+                ? `Hata: ${data.detail}` : `Sonuç: pH = ${data.sonuc}`;
         }
-    </script>
-    <section class="card">
-    <h2>📐 Denklem Çözücü (ax + by = c)</h2>
-    <div class="input-row">
-        <input type="number" id="a1" placeholder="a1">x + <input type="number" id="b1" placeholder="b1">y = <input type="number" id="c1" placeholder="c1">
-    </div>
-    <div class="input-row">
-        <input type="number" id="a2" placeholder="a2">x + <input type="number" id="b2" placeholder="b2">y = <input type="number" id="c2">
-    </div>
-    <button onclick="solveEquation()">Sistemi Çöz</button>
-    <p id="eq_result" class="result"></p>
-</section>
 
-<section class="card">
-    <h2>📈 Üstel Artış (a^x)</h2>
-    <input type="number" id="base" placeholder="Taban (a)">
-    <input type="number" id="exp" placeholder="Üs (x)">
-    <button onclick="calculatePower()">Hesapla</button>
-    <p id="pow_result" class="result"></p>
-</section>
-
-<script>
-async function solveEquation() {
-    const params = new URLSearchParams({
-        a1: document.getElementById('a1').value, b1: document.getElementById('b1').value, c1: document.getElementById('c1').value,
-        a2: document.getElementById('a2').value, b2: document.getElementById('b2').value, c2: document.getElementById('c2').value
-    });
-    const res = await fetch(`/hesapla/denklem?${params}`);
-    const data = await res.json();
-    document.getElementById('eq_result').innerText = data.hata ? data.hata : `Çözüm: x=${data.x}, y=${data.y}`;
-}
-
-async function calculatePower() {
-    const b = document.getElementById('base').value;
-    const e = document.getElementById('exp').value;
-    const res = await fetch(`/hesapla/ustel?taban=${b}&us=${e}`);
-    const data = await res.json();
-    document.getElementById('pow_result').innerText = `Sonuç: ${data.sonuc}`;
-}
-</script>
-    <section class="accordion-container">
-    <h2>📚 Akademik Konu Anlatımları (TYT-AYT)</h2>
-
-    <div class="accordion-item">
-        <button class="accordion-header" onclick="toggleAccordion(this)">
-            📐 Trigonometri: Üçgenlerin Gizli Dili <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p><strong>Basit Örnek:</strong> Bir ağacın boyunu ölçmek istiyorsun ama tepeye çıkamıyorsun. Yere bıraktığın gölgenin uzunluğunu ve güneşin geliş açısını biliyorsan, <strong>Tan(α)</strong> kullanarak ağacın boyunu hesaplayabilirsin.</p>
-            
-            <p><strong>Akademik Not (MIT):</strong> Birim çember üzerindeki her nokta (cosθ, sinθ) koordinatlarına sahiptir. Pisagor teoremi burada <em>sin²θ + cos²θ = 1</em> olarak karşımıza çıkar.</p>
-        </div>
-    </div>
-
-    <div class="accordion-item">
-        <button class="accordion-header" onclick="toggleAccordion(this)">
-            📈 Türev ve İntegral: Değişimin Matematiği <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p><strong>Basit Örnek (Türev):</strong> Hız göstergesi o anki türevidir. <strong>(İntegral):</strong> Arabanın o ana kadar aldığı toplam yol ise hızın integralidir.</p>
-            
-
-[Image of derivative and integral relationship diagram]
-
-            <p><strong>Kural:</strong> xⁿ ifadesinin türevi n·xⁿ⁻¹ iken, integrali (xⁿ⁺¹)/(n+1) + C'dir.</p>
-        </div>
-    </div>
-
-    <div class="accordion-item">
-        <button class="accordion-header" onclick="toggleAccordion(this)">
-            🧪 Kimyasal Bağlar: Atomların Sosyal Hayatı <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p><strong>İyonik Bağ:</strong> Bir atomun diğerine tamamen elektron vermesidir (Zengin atomun fakire borç vermesi gibi). Örn: NaCl (Tuz).</p>
-            <p><strong>Kovalent Bağ:</strong> İki atomun elektronu ortaklaşa kullanmasıdır (İki arkadaşın bir kitabı beraber okuması gibi). Örn: H₂O (Su).</p>
-            
-            <p><strong>Akademik Not (Harvard):</strong> Bağın türünü atomlar arasındaki elektronegatiflik farkı belirler.</p>
-        </div>
-    </div>
-</section>
-
-<script>
-function toggleAccordion(element) {
-    const content = element.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
-    element.querySelector('span').innerText = content.style.display === "block" ? "-" : "+";
-}
-</script>
-</body>
-    <!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Linguist's Lab | Dijital Akademi</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        .bio-img { width: 100px; height: 100px; border-radius: 50%; float: right; margin-left: 15px; border: 2px solid #3498db; }
-        .concept-img { width: 100%; max-height: 300px; object-fit: contain; margin: 15px 0; border-radius: 8px; background: #fff; }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Linguist's Lab</h1>
-        <p>Akademik Kaynaklı TYT-AYT Bilgi Motoru</p>
-    </header>
-
-    <main class="container">
-        <h2>📐 Matematik Modülleri</h2>
-        
-        <div class="accordion">
-            <div class="item">
-                <button onclick="toggle(this)">Fonksiyonlar ve Polinomlar <span>+</span></button>
-                <div class="content">
-                    
-                    <p><strong>Basit Örnek:</strong> Polinomları çok odalı bir ev gibi düşünün. Her oda (terim) farklı bir kuvvete ($x^2, x^3$) sahiptir. $P(x)$ bir girdiyi alır ve bu odalardan geçirerek bir sonuç üretir.</p>
-                    <p><em>Akademik Not:</em> Polinomlar, karmaşık eğrileri basit toplamlarla ifade etmemizi sağlar.</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <button onclick="toggle(this)">Limit, Matris ve Determinant <span>+</span></button>
-                <div class="content">
-                    
-                    <p><strong>Augustin-Louis Cauchy:</strong> Analizin babalarından sayılır, limit kavramını modern formuna sokmuştur.</p>
-                    <p><strong>Limit:</strong> Bir noktaya asla dokunmadan, ona "sonsuz" yaklaşma sanatıdır. </p>
-                    <p><strong>Matris:</strong> Verilerin bir tablo (ızgara) içine hapsedilmesidir. Bilgisayar grafiklerinin (oyunların) temelidir.</p>
-                    
-                </div>
-            </div>
-
-            <div class="item">
-                <button onclick="toggle(this)">Üslü-Köklü Sayılar ve Problemler <span>+</span></button>
-                <div class="content">
-                    <p><strong>Üslü Sayılar:</strong> Bir sayının kendiyle "zincirleme" çarpımıdır. <strong>Köklü Sayılar:</strong> Bu zinciri geri çözme işlemidir.</p>
-                    <p><strong>Problemler:</strong> Dilbilimin matematiğe en yakın olduğu yerdir. Soruyu doğru "parse" etmek (ayrıştırmak), denklemi kurmanın yarısıdır.</p>
-                </div>
-            </div>
-        </div>
-
-        <h2>🧪 Kimya Modülleri</h2>
-        <div class="accordion">
-            <div class="item">
-                <button onclick="toggle(this)">Asitler, Bazlar ve pH <span>+</span></button>
-                <div class="content">
-                    
-                    <p><strong>Svante Arrhenius:</strong> İyonlaşma teorisiyle Nobel almıştır. Asitleri sulu çözeltide $H^+$ veren maddeler olarak tanımlamıştır.</p>
-                    
-                    <p><strong>pH Hesapla:</strong> <input type="number" id="h_val"> <button onclick="calc('ph')">Hesapla</button></p>
-                    <div id="ph_res"></div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        function toggle(btn) {
-            const content = btn.nextElementSibling;
-            content.style.display = content.style.display === "block" ? "none" : "block";
-        }
-        async function calc(type) {
-            const val = document.getElementById('h_val').value;
-            const res = await fetch(`/api/ph?h=${val}`);
+        // --- Mol ---
+        async function calculateMol() {
+            const m = document.getElementById('mol_kutle').value;
+            const ma = document.getElementById('mol_ma').value;
+            const res = await fetch(`/hesapla/mol?kutle=${m}&ma=${ma}`);
             const data = await res.json();
-            document.getElementById('ph_res').innerText = "Sonuç: " + data.sonuc;
-        }
-    </script>
-</body>
-<div class="item">
-    <button onclick="toggle(this)">Matematiksel Problemler (Hız, İşçi, Havuz) <span>+</span></button>
-    <div class="content">
-        <p><strong>Linguist Note:</strong> Problem çözümü, doğal dilden matematik diline bir "tercüme" işlemidir. "İki araç birbirine doğru geliyor" ifadesi, hızların toplanması ($V_1 + V_2$) anlamına gelen bir operatördür.</p>
-        
-        <div class="sub-calc">
-            <h4>🚗 Hız Hesaplayıcı (x = v.t)</h4>
-            <input type="number" id="yol" placeholder="Yol (x)">
-            <input type="number" id="hiz" placeholder="Hız (v)">
-            <input type="number" id="zaman" placeholder="Zaman (t)">
-            <button onclick="solveSpeed()">Eksik Olanı Bul</button>
-            <p id="speed_res"></p>
-        </div>
-
-        <div class="sub-calc">
-            <h4>👷 İşçi/Havuz Hesaplayıcı</h4>
-            <input type="text" id="workers" placeholder="Süreleri virgülle ayır (örn: 3,6,12)">
-            <button onclick="solveWorker()">Birlikte Kaç Saatte?</button>
-            <p id="worker_res"></p>
-        </div>
-    </div>
-</div>
-
-<script>
-async function solveSpeed() {
-    const x = document.getElementById('yol').value;
-    const v = document.getElementById('hiz').value;
-    const t = document.getElementById('zaman').value;
-    let url = `/api/hiz_problemi?`;
-    if(x) url += `yol=${x}&`;
-    if(v) url += `hiz=${v}&`;
-    if(t) url += `zaman=${t}`;
-    
-    const res = await fetch(url);
-    const data = await res.json();
-    document.getElementById('speed_res').innerText = `Sonuç: ${data.sonuc} ${data.birim}`;
-}
-
-async function solveWorker() {
-    const list = document.getElementById('workers').value;
-    const res = await fetch(`/api/isci_problemi?kapasite_liste=${list}`);
-    const data = await res.json();
-    document.getElementById('worker_res').innerText = `Birlikte Bitiş: ${data.sonuc} saat`;
-}
-</script>
-    <!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Linguist's Lab | TYT-AYT Akademi</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        .accordion-item { border: 1px solid #ddd; margin-bottom: 10px; border-radius: 8px; overflow: hidden; }
-        .header { width: 100%; padding: 15px; background: #2c3e50; color: white; border: none; text-align: left; cursor: pointer; font-size: 16px; display: flex; justify-content: space-between; }
-        .content { display: none; padding: 20px; background: #f9f9f9; line-height: 1.6; }
-        .calc-box { background: #ecf0f1; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #3498db; }
-        img { max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0; display: block; }
-        .bio { font-style: italic; color: #7f8c8d; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
-    </style>
-</head>
-<body>
-    <header style="text-align:center; padding: 40px; background:#34495e; color:white;">
-        <h1>Linguist's Lab</h1>
-        <p>Akademik Kaynaklı (Harvard, MIT, Oxford) Bilgi Motoru</p>
-    </header>
-
-    <div class="container" style="max-width:900px; margin: 20px auto; padding: 0 20px;">
-        
-        <h2>📐 Matematik Analiz ve Cebir</h2>
-        
-        <div class="accordion-item">
-            <button class="header" onclick="toggle(this)">Trigonometri ve Birim Çember <span>+</span></button>
-            <div class="content">
-                <p><strong>Basit Örnek:</strong> Bir dönme dolabın yüksekliğini zamana göre çizersek bir <strong>Sinüs Dalgası</strong> elde ederiz.</p>
-                
-                <p><em>Akademik Not:</em> Euler formülü ($e^{ix} = \cos x + i \sin x$), trigonometriyi karmaşık sayılarla bağlar.</p>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <button class="header" onclick="toggle(this)">Limit, Türev ve İntegral <span>+</span></button>
-            <div class="content">
-                <div class="bio">Bilim İnsanı: Augustin-Louis Cauchy (Analizin babası)</div>
-                
-                <p><strong>Türev:</strong> Arabanın o anki hız göstergesidir.</p>
-                
-
-[Image of derivative as slope of tangent line]
-
-                <p><strong>İntegral:</strong> Bir tarlanın sınırları yamuk olsa bile toplam alanını bulma sanatıdır.</p>
-                
-
-[Image of definite integral as area under a curve]
-
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <button class="header" onclick="toggle(this)">Problemler (Hız, İşçi, Havuz) <span>+</span></button>
-            <div class="content">
-                <p><strong>Linguist Note:</strong> "Birbirine doğru gelme" = Hızları topla. "Kovalama" = Hızları çıkar.</p>
-                <div class="calc-box">
-                    <h4>🚗 Hız Hesaplayıcı</h4>
-                    <input type="number" id="x" placeholder="Yol">
-                    <input type="number" id="v" placeholder="Hız">
-                    <input type="number" id="t" placeholder="Zaman">
-                    <button onclick="calcSpeed()">Hesapla</button>
-                    <div id="speed_res"></div>
-                </div>
-            </div>
-        </div>
-
-        <h2>🧪 Kimya ve Maddenin Doğası</h2>
-
-        <div class="accordion-item">
-            <button class="header" onclick="toggle(this)">Organik Kimya: Karbon Dünyası <span>+</span></button>
-            <div class="content">
-                <p><strong>Lego Mantığı:</strong> Karbon her zaman 4 bağ yapar. -OH gelirse Alkol, -COOH gelirse Asit olur.</p>
-                
-
-[Image of functional groups in organic chemistry table]
-
-                <p><em>Akademik Not:</em> Hibritleşme teorisi molekül geometrisini belirler.</p>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <button class="header" onclick="toggle(this)">Gazlar: PV=nRT <span>+</span></button>
-            <div class="content">
-                <p><strong>Paran Varsa Ne Rahat:</strong> Sıcaklık artarsa gaz tanecikleri daha hızlı dans eder ve basınç artar.</p>
-                
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        function toggle(btn) {
-            const content = btn.nextElementSibling;
-            content.style.display = content.style.display === "block" ? "none" : "block";
-            btn.querySelector('span').innerText = content.style.display === "block" ? "-" : "+";
+            document.getElementById('mol_result').innerText = data.detail
+                ? `Hata: ${data.detail}` : `Sonuç: ${data.sonuc} mol`;
         }
 
-        async function calcSpeed() {
-            const x = document.getElementById('x').value;
-            const v = document.getElementById('v').value;
-            const t = document.getElementById('t').value;
-            let query = "";
-            if(x) query += `x=${x}&`; if(v) query += `v=${v}&`; if(t) query += `t=${t}`;
-            const res = await fetch(`/api/hiz?${query}`);
+        // --- Denklem ---
+        async function solveEquation() {
+            const params = new URLSearchParams({
+                a1: document.getElementById('a1').value,
+                b1: document.getElementById('b1').value,
+                c1: document.getElementById('c1').value,
+                a2: document.getElementById('a2').value,
+                b2: document.getElementById('b2').value,
+                c2: document.getElementById('c2').value
+            });
+            const res = await fetch(`/hesapla/denklem?${params}`);
             const data = await res.json();
-            document.getElementById('speed_res').innerText = "Sonuç: " + data.sonuc + " " + data.birim;
+            document.getElementById('eq_result').innerText = data.hata
+                ? data.hata : `Çözüm: x = ${data.x}, y = ${data.y}`;
+        }
+
+        // --- Üstel ---
+        async function calculatePower() {
+            const b = document.getElementById('base').value;
+            const e = document.getElementById('exp_val').value;
+            const res = await fetch(`/hesapla/ustel?taban=${b}&us=${e}`);
+            const data = await res.json();
+            document.getElementById('pow_result').innerText = data.detail
+                ? `Hata: ${data.detail}` : `Sonuç: ${data.sonuc}`;
+        }
+
+        // --- Hız ---
+        async function solveSpeed() {
+            const x = document.getElementById('yol').value;
+            const v = document.getElementById('hiz_val').value;
+            const t = document.getElementById('zaman_val').value;
+            const filled = [x, v, t].filter(Boolean).length;
+            if (filled !== 2) {
+                document.getElementById('speed_res').innerText = "Lütfen tam olarak 2 değer girin.";
+                return;
+            }
+            let url = `/hesapla/hiz?`;
+            if (x) url += `yol=${x}&`;
+            if (v) url += `hiz=${v}&`;
+            if (t) url += `zaman=${t}`;
+            const res = await fetch(url);
+            const data = await res.json();
+            document.getElementById('speed_res').innerText = data.detail
+                ? `Hata: ${data.detail}` : `Sonuç: ${data.sonuc} ${data.birim}`;
+        }
+
+        // --- İşçi/Havuz ---
+        async function solveWorker() {
+            const list = document.getElementById('workers').value;
+            const res = await fetch(`/hesapla/isci?kapasite_liste=${encodeURIComponent(list)}`);
+            const data = await res.json();
+            document.getElementById('worker_res').innerText = data.detail
+                ? `Hata: ${data.detail}` : `Birlikte bitiş: ${data.sonuc} ${data.birim}`;
         }
     </script>
+
 </body>
-</html>
 </html>
