@@ -232,5 +232,49 @@ function toggleAccordion(element) {
         }
     </script>
 </body>
-</html>
+<div class="item">
+    <button onclick="toggle(this)">Matematiksel Problemler (Hız, İşçi, Havuz) <span>+</span></button>
+    <div class="content">
+        <p><strong>Linguist Note:</strong> Problem çözümü, doğal dilden matematik diline bir "tercüme" işlemidir. "İki araç birbirine doğru geliyor" ifadesi, hızların toplanması ($V_1 + V_2$) anlamına gelen bir operatördür.</p>
+        
+        <div class="sub-calc">
+            <h4>🚗 Hız Hesaplayıcı (x = v.t)</h4>
+            <input type="number" id="yol" placeholder="Yol (x)">
+            <input type="number" id="hiz" placeholder="Hız (v)">
+            <input type="number" id="zaman" placeholder="Zaman (t)">
+            <button onclick="solveSpeed()">Eksik Olanı Bul</button>
+            <p id="speed_res"></p>
+        </div>
+
+        <div class="sub-calc">
+            <h4>👷 İşçi/Havuz Hesaplayıcı</h4>
+            <input type="text" id="workers" placeholder="Süreleri virgülle ayır (örn: 3,6,12)">
+            <button onclick="solveWorker()">Birlikte Kaç Saatte?</button>
+            <p id="worker_res"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+async function solveSpeed() {
+    const x = document.getElementById('yol').value;
+    const v = document.getElementById('hiz').value;
+    const t = document.getElementById('zaman').value;
+    let url = `/api/hiz_problemi?`;
+    if(x) url += `yol=${x}&`;
+    if(v) url += `hiz=${v}&`;
+    if(t) url += `zaman=${t}`;
+    
+    const res = await fetch(url);
+    const data = await res.json();
+    document.getElementById('speed_res').innerText = `Sonuç: ${data.sonuc} ${data.birim}`;
+}
+
+async function solveWorker() {
+    const list = document.getElementById('workers').value;
+    const res = await fetch(`/api/isci_problemi?kapasite_liste=${list}`);
+    const data = await res.json();
+    document.getElementById('worker_res').innerText = `Birlikte Bitiş: ${data.sonuc} saat`;
+}
+</script>
 </html>
