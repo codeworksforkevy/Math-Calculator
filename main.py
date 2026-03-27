@@ -10,6 +10,43 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import math
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import math
+
+app = FastAPI(title="Linguist's Lab: Academic Engine")
+
+# Statik dosyalar ve şablonlar
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+# --- HESAPLAMA MOTORU ---
+
+@app.get("/api/ph")
+def hesapla_ph(h: float):
+    if h <= 0: return {"sonuc": "Hata: Derişim > 0 olmalı"}
+    return {"sonuc": round(-math.log10(h), 2)}
+
+@app.get("/api/ustel")
+def hesapla_ustel(a: float, x: float):
+    try:
+        return {"sonuc": round(math.pow(a, x), 4)}
+    except:
+        return {"sonuc": "Hata: Geçersiz işlem"}
+
+@app.get("/api/denklem")
+def coze_denklem(a1: float, b1: float, c1: float, a2: float, b2: float, c2: float):
+    det = (a1 * b2) - (a2 * b1)
+    if det == 0: return {"sonuc": "Çözüm Yok (Paralel)"}
+    x = (c1 * b2 - c2 * b1) / det
+    y = (a1 * c2 - a2 * c1) / det
+    return {"sonuc": f"x: {round(x,2)}, y: {round(y,2)}"}
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
