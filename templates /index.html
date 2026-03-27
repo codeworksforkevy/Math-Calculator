@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linguist's Lab | Akademi & Hesaplama</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <h1>Linguist's Lab</h1>
+        <p>TYT-AYT Fen & Matematik Motoru</p>
+    </nav>
+
+    <main class="container">
+        <section class="card">
+            <h2>🧪 Kimyasal Hesaplayıcı</h2>
+            <div class="input-group">
+                <label>H+ Derişimi (mol/L):</label>
+                <input type="number" id="h_input" placeholder="Örn: 0.001">
+                <button onclick="calculatePH()">pH Hesapla</button>
+            </div>
+            <p id="ph_result" class="result"></p>
+        </section>
+
+        <section class="content-grid">
+            <article class="info-card">
+                <h3>Limit ve Süreklilik</h3>
+                <p>Limit, bir fonksiyonun bir noktaya yaklaşırken ulaştığı eğilimdir. Süreklilik için limitin fonksiyon değerine eşit olması gerekir.</p>
+                
+
+[Image of limit and continuity graph]
+
+                <small>Kaynak: MIT OpenCourseWare</small>
+            </article>
+
+            <article class="info-card">
+                <h3>Asit-Baz Kuramları</h3>
+                <p>Brønsted-Lowry'e göre asit proton veren, baz ise proton alandır. Lewis kuramı ise elektron çifti transferine odaklanır.</p>
+                
+
+[Image of Brønsted-Lowry acid-base theory diagram]
+
+                <small>Kaynak: Harvard Chemistry</small>
+            </article>
+
+            <article class="info-card">
+                <h3>Türev ve Teğet Eğimi</h3>
+                <p>Bir eğrinin üzerindeki belirli bir noktadan geçen teğetin eğimi, fonksiyonun o noktadaki türevine eşittir.</p>
+                
+
+[Image of derivative as slope of tangent line]
+
+                <small>Kaynak: Oxford Mathematics</small>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        async function calculatePH() {
+            const h = document.getElementById('h_input').value;
+            const res = await fetch(`/hesapla/ph?h_derisimi=${h}`);
+            const data = await res.json();
+            document.getElementById('ph_result').innerText = `Sonuç: pH ${data.sonuc}`;
+        }
+    </script>
+</body>
+</html>
