@@ -15,6 +15,27 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import math
+# --- PROBLEM ÇÖZÜCÜ MODÜLÜ ---
+
+@app.get("/api/hiz_problemi")
+def hesapla_hiz(yol: float = None, hiz: float = None, zaman: float = None):
+    """x = v * t formülüne göre eksik olanı bulur."""
+    if yol is None: return {"sonuc": round(hiz * zaman, 2), "birim": "metre/km"}
+    if hiz is None: return {"sonuc": round(yol / zaman, 2), "birim": "hız (v)"}
+    if zaman is None: return {"sonuc": round(yol / hiz, 2), "birim": "saat/sn"}
+
+@app.get("/api/isci_problemi")
+def hesapla_isci(kapasite_liste: str):
+    """
+    İşçi/Havuz Problemi: 1/t1 + 1/t2 = 1/Toplam
+    Girdi örneği: "3,6" (Bir işçi 3, diğeri 6 saatte bitiriyor)
+    """
+    try:
+        times = [float(x) for x in kapasite_liste.split(",")]
+        toplam_kapasite = sum(1/t for t in times)
+        return {"sonuc": round(1 / toplam_kapasite, 2), "birim": "saat"}
+    except:
+        return {"sonuc": "Hata: Geçersiz giriş"}
 
 app = FastAPI(title="Linguist's Lab: Academic Engine")
 
