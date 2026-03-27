@@ -277,4 +277,115 @@ async function solveWorker() {
     document.getElementById('worker_res').innerText = `Birlikte Bitiş: ${data.sonuc} saat`;
 }
 </script>
+    <!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Linguist's Lab | TYT-AYT Akademi</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .accordion-item { border: 1px solid #ddd; margin-bottom: 10px; border-radius: 8px; overflow: hidden; }
+        .header { width: 100%; padding: 15px; background: #2c3e50; color: white; border: none; text-align: left; cursor: pointer; font-size: 16px; display: flex; justify-content: space-between; }
+        .content { display: none; padding: 20px; background: #f9f9f9; line-height: 1.6; }
+        .calc-box { background: #ecf0f1; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #3498db; }
+        img { max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0; display: block; }
+        .bio { font-style: italic; color: #7f8c8d; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <header style="text-align:center; padding: 40px; background:#34495e; color:white;">
+        <h1>Linguist's Lab</h1>
+        <p>Akademik Kaynaklı (Harvard, MIT, Oxford) Bilgi Motoru</p>
+    </header>
+
+    <div class="container" style="max-width:900px; margin: 20px auto; padding: 0 20px;">
+        
+        <h2>📐 Matematik Analiz ve Cebir</h2>
+        
+        <div class="accordion-item">
+            <button class="header" onclick="toggle(this)">Trigonometri ve Birim Çember <span>+</span></button>
+            <div class="content">
+                <p><strong>Basit Örnek:</strong> Bir dönme dolabın yüksekliğini zamana göre çizersek bir <strong>Sinüs Dalgası</strong> elde ederiz.</p>
+                
+                <p><em>Akademik Not:</em> Euler formülü ($e^{ix} = \cos x + i \sin x$), trigonometriyi karmaşık sayılarla bağlar.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="header" onclick="toggle(this)">Limit, Türev ve İntegral <span>+</span></button>
+            <div class="content">
+                <div class="bio">Bilim İnsanı: Augustin-Louis Cauchy (Analizin babası)</div>
+                
+                <p><strong>Türev:</strong> Arabanın o anki hız göstergesidir.</p>
+                
+
+[Image of derivative as slope of tangent line]
+
+                <p><strong>İntegral:</strong> Bir tarlanın sınırları yamuk olsa bile toplam alanını bulma sanatıdır.</p>
+                
+
+[Image of definite integral as area under a curve]
+
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="header" onclick="toggle(this)">Problemler (Hız, İşçi, Havuz) <span>+</span></button>
+            <div class="content">
+                <p><strong>Linguist Note:</strong> "Birbirine doğru gelme" = Hızları topla. "Kovalama" = Hızları çıkar.</p>
+                <div class="calc-box">
+                    <h4>🚗 Hız Hesaplayıcı</h4>
+                    <input type="number" id="x" placeholder="Yol">
+                    <input type="number" id="v" placeholder="Hız">
+                    <input type="number" id="t" placeholder="Zaman">
+                    <button onclick="calcSpeed()">Hesapla</button>
+                    <div id="speed_res"></div>
+                </div>
+            </div>
+        </div>
+
+        <h2>🧪 Kimya ve Maddenin Doğası</h2>
+
+        <div class="accordion-item">
+            <button class="header" onclick="toggle(this)">Organik Kimya: Karbon Dünyası <span>+</span></button>
+            <div class="content">
+                <p><strong>Lego Mantığı:</strong> Karbon her zaman 4 bağ yapar. -OH gelirse Alkol, -COOH gelirse Asit olur.</p>
+                
+
+[Image of functional groups in organic chemistry table]
+
+                <p><em>Akademik Not:</em> Hibritleşme teorisi molekül geometrisini belirler.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="header" onclick="toggle(this)">Gazlar: PV=nRT <span>+</span></button>
+            <div class="content">
+                <p><strong>Paran Varsa Ne Rahat:</strong> Sıcaklık artarsa gaz tanecikleri daha hızlı dans eder ve basınç artar.</p>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggle(btn) {
+            const content = btn.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+            btn.querySelector('span').innerText = content.style.display === "block" ? "-" : "+";
+        }
+
+        async function calcSpeed() {
+            const x = document.getElementById('x').value;
+            const v = document.getElementById('v').value;
+            const t = document.getElementById('t').value;
+            let query = "";
+            if(x) query += `x=${x}&`; if(v) query += `v=${v}&`; if(t) query += `t=${t}`;
+            const res = await fetch(`/api/hiz?${query}`);
+            const data = await res.json();
+            document.getElementById('speed_res').innerText = "Sonuç: " + data.sonuc + " " + data.birim;
+        }
+    </script>
+</body>
+</html>
 </html>
