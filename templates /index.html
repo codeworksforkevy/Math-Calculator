@@ -154,4 +154,83 @@ function toggleAccordion(element) {
 }
 </script>
 </body>
+    <!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Linguist's Lab | Dijital Akademi</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .bio-img { width: 100px; height: 100px; border-radius: 50%; float: right; margin-left: 15px; border: 2px solid #3498db; }
+        .concept-img { width: 100%; max-height: 300px; object-fit: contain; margin: 15px 0; border-radius: 8px; background: #fff; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Linguist's Lab</h1>
+        <p>Akademik Kaynaklı TYT-AYT Bilgi Motoru</p>
+    </header>
+
+    <main class="container">
+        <h2>📐 Matematik Modülleri</h2>
+        
+        <div class="accordion">
+            <div class="item">
+                <button onclick="toggle(this)">Fonksiyonlar ve Polinomlar <span>+</span></button>
+                <div class="content">
+                    
+                    <p><strong>Basit Örnek:</strong> Polinomları çok odalı bir ev gibi düşünün. Her oda (terim) farklı bir kuvvete ($x^2, x^3$) sahiptir. $P(x)$ bir girdiyi alır ve bu odalardan geçirerek bir sonuç üretir.</p>
+                    <p><em>Akademik Not:</em> Polinomlar, karmaşık eğrileri basit toplamlarla ifade etmemizi sağlar.</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <button onclick="toggle(this)">Limit, Matris ve Determinant <span>+</span></button>
+                <div class="content">
+                    
+                    <p><strong>Augustin-Louis Cauchy:</strong> Analizin babalarından sayılır, limit kavramını modern formuna sokmuştur.</p>
+                    <p><strong>Limit:</strong> Bir noktaya asla dokunmadan, ona "sonsuz" yaklaşma sanatıdır. </p>
+                    <p><strong>Matris:</strong> Verilerin bir tablo (ızgara) içine hapsedilmesidir. Bilgisayar grafiklerinin (oyunların) temelidir.</p>
+                    
+                </div>
+            </div>
+
+            <div class="item">
+                <button onclick="toggle(this)">Üslü-Köklü Sayılar ve Problemler <span>+</span></button>
+                <div class="content">
+                    <p><strong>Üslü Sayılar:</strong> Bir sayının kendiyle "zincirleme" çarpımıdır. <strong>Köklü Sayılar:</strong> Bu zinciri geri çözme işlemidir.</p>
+                    <p><strong>Problemler:</strong> Dilbilimin matematiğe en yakın olduğu yerdir. Soruyu doğru "parse" etmek (ayrıştırmak), denklemi kurmanın yarısıdır.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>🧪 Kimya Modülleri</h2>
+        <div class="accordion">
+            <div class="item">
+                <button onclick="toggle(this)">Asitler, Bazlar ve pH <span>+</span></button>
+                <div class="content">
+                    
+                    <p><strong>Svante Arrhenius:</strong> İyonlaşma teorisiyle Nobel almıştır. Asitleri sulu çözeltide $H^+$ veren maddeler olarak tanımlamıştır.</p>
+                    
+                    <p><strong>pH Hesapla:</strong> <input type="number" id="h_val"> <button onclick="calc('ph')">Hesapla</button></p>
+                    <div id="ph_res"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggle(btn) {
+            const content = btn.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+        async function calc(type) {
+            const val = document.getElementById('h_val').value;
+            const res = await fetch(`/api/ph?h=${val}`);
+            const data = await res.json();
+            document.getElementById('ph_res').innerText = "Sonuç: " + data.sonuc;
+        }
+    </script>
+</body>
+</html>
 </html>
