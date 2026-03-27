@@ -5,6 +5,40 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import math
+
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+# --- GELİŞMİŞ MATEMATİK MODÜLÜ ---
+
+@app.get("/hesapla/ustel")
+def ustel_hesapla(taban: float, us: float):
+    """f(x) = a^x hesaplaması"""
+    return {"islem": "Üstel Fonksiyon", "sonuc": math.pow(taban, us)}
+
+@app.get("/hesapla/denklem")
+def denklem_coz(a1: float, b1: float, c1: float, a2: float, b2: float, c2: float):
+    """
+    a1x + b1y = c1
+    a2x + b2y = c2  sistemini çözer.
+    """
+    det = (a1 * b2) - (a2 * b1)
+    if det == 0:
+        return {"hata": "Sistemin tek bir çözümü yok (Paralel doğrular)."}
+    x = (c1 * b2 - c2 * b1) / det
+    y = (a1 * c2 - a2 * c1) / det
+    return {"x": round(x, 2), "y": round(y, 2)}
+
+# --- ANA SAYFA ---
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 import math
 
 app = FastAPI()
