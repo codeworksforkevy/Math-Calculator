@@ -105,5 +105,53 @@ async function calculatePower() {
     document.getElementById('pow_result').innerText = `Sonuç: ${data.sonuc}`;
 }
 </script>
+    <section class="accordion-container">
+    <h2>📚 Akademik Konu Anlatımları (TYT-AYT)</h2>
+
+    <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            📐 Trigonometri: Üçgenlerin Gizli Dili <span>+</span>
+        </button>
+        <div class="accordion-content">
+            <p><strong>Basit Örnek:</strong> Bir ağacın boyunu ölçmek istiyorsun ama tepeye çıkamıyorsun. Yere bıraktığın gölgenin uzunluğunu ve güneşin geliş açısını biliyorsan, <strong>Tan(α)</strong> kullanarak ağacın boyunu hesaplayabilirsin.</p>
+            
+            <p><strong>Akademik Not (MIT):</strong> Birim çember üzerindeki her nokta (cosθ, sinθ) koordinatlarına sahiptir. Pisagor teoremi burada <em>sin²θ + cos²θ = 1</em> olarak karşımıza çıkar.</p>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            📈 Türev ve İntegral: Değişimin Matematiği <span>+</span>
+        </button>
+        <div class="accordion-content">
+            <p><strong>Basit Örnek (Türev):</strong> Hız göstergesi o anki türevidir. <strong>(İntegral):</strong> Arabanın o ana kadar aldığı toplam yol ise hızın integralidir.</p>
+            
+
+[Image of derivative and integral relationship diagram]
+
+            <p><strong>Kural:</strong> xⁿ ifadesinin türevi n·xⁿ⁻¹ iken, integrali (xⁿ⁺¹)/(n+1) + C'dir.</p>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+            🧪 Kimyasal Bağlar: Atomların Sosyal Hayatı <span>+</span>
+        </button>
+        <div class="accordion-content">
+            <p><strong>İyonik Bağ:</strong> Bir atomun diğerine tamamen elektron vermesidir (Zengin atomun fakire borç vermesi gibi). Örn: NaCl (Tuz).</p>
+            <p><strong>Kovalent Bağ:</strong> İki atomun elektronu ortaklaşa kullanmasıdır (İki arkadaşın bir kitabı beraber okuması gibi). Örn: H₂O (Su).</p>
+            
+            <p><strong>Akademik Not (Harvard):</strong> Bağın türünü atomlar arasındaki elektronegatiflik farkı belirler.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+function toggleAccordion(element) {
+    const content = element.nextElementSibling;
+    content.style.display = content.style.display === "block" ? "none" : "block";
+    element.querySelector('span').innerText = content.style.display === "block" ? "-" : "+";
+}
+</script>
 </body>
 </html>
