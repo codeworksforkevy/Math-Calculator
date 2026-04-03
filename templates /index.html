@@ -3,262 +3,696 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linguist's Lab | Akademi & Hesaplama</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Kimya ve Matematik İçin Çalışmayı Sevme Planlarım</title>
+
+    <!-- Google Fonts: Calibri yoksa en yakın alternatif -->
+    <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- MathJax -->
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+            options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
     <style>
-        .input-row { margin-bottom: 0.5rem; }
-        .input-row input { width: 80px; margin: 0 4px; }
-        .calc-box { background: #ecf0f1; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 5px solid #3498db; }
-        .calc-box h4 { margin-top: 0; }
-        .bio { font-style: italic; color: #7f8c8d; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
-        .accordion-header { background: #2c3e50; color: white; }
-        .accordion-header:hover { background: #34495e; }
-        header { text-align: center; padding: 40px; background: #2c3e50; color: white; }
-        header p { margin: 0; opacity: 0.8; }
+        /* ── TEMEL ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --pink:      #F4C2C2;
+            --pink-dark: #f0a8a8;
+            --pink-btn:  #e88e8e;
+            --white:     #FFFFFF;
+            --white-t15: rgba(255,255,255,0.15);
+            --white-t25: rgba(255,255,255,0.25);
+            --white-t40: rgba(255,255,255,0.40);
+            --white-t60: rgba(255,255,255,0.60);
+            --text:      #FFFFFF;
+            --muted:     rgba(255,255,255,0.75);
+            --font: 'Carlito', 'Calibri', 'Segoe UI', Tahoma, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--pink);
+            color: var(--text);
+            font-family: var(--font);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        header {
+            background: rgba(255,255,255,0.22);
+            border-bottom: 2px solid var(--white-t40);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            backdrop-filter: blur(6px);
+        }
+        header h1 { font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 700; }
+        header p  { margin-top: 0.4rem; opacity: 0.82; font-size: 0.95rem; }
+
+        /* ── KAPSAYICI ── */
+        .container { max-width: 920px; margin: 2rem auto; padding: 0 1rem 3rem; }
+
+        /* ── KART ── */
+        .card {
+            background: var(--white-t15);
+            border: 1px solid var(--white-t40);
+            border-radius: 16px;
+            padding: 1.6rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(6px);
+        }
+        .card h2 {
+            font-size: 1.15rem;
+            border-bottom: 1px solid var(--white-t40);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ── GRID ── */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+        @media (max-width: 620px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        /* ── BİLGİ KARTI ── */
+        .info-card {
+            background: var(--white-t15);
+            border: 1px solid var(--white-t40);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            backdrop-filter: blur(4px);
+        }
+        .info-card h3 {
+            font-size: 1rem;
+            border-bottom: 1px solid var(--white-t40);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.6rem;
+        }
+        .info-card small { opacity: 0.7; font-size: 0.8rem; }
+
+        /* ── INPUT & BUTTON ── */
+        input[type=number], input[type=text] {
+            background: rgba(255,255,255,0.88);
+            border: none;
+            border-radius: 8px;
+            padding: 7px 10px;
+            margin: 4px 4px 4px 0;
+            color: #333;
+            font-family: var(--font);
+            font-size: 0.9rem;
+            width: 110px;
+        }
+        input.wide { width: 240px; }
+
+        button {
+            background: var(--white);
+            color: var(--pink-btn);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-family: var(--font);
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: transform 0.15s, background 0.15s;
+            margin-top: 4px;
+        }
+        button:hover { transform: scale(1.04); background: #fefefe; }
+
+        .result {
+            display: block;
+            font-weight: 700;
+            margin-top: 8px;
+            min-height: 1.4em;
+        }
+
+        /* ── INPUT GRUBU ── */
+        .input-group { margin-bottom: 1.1rem; }
+        .input-group label { display: block; margin-bottom: 4px; font-size: 0.93rem; }
+        .input-row { margin-bottom: 6px; font-size: 0.93rem; }
+        .input-row input { width: 70px; }
+
+        /* ── ACCORDION ── */
+        .accordion-item { margin-bottom: 6px; }
+
+        .accordion-header {
+            width: 100%;
+            background: rgba(80,40,40,0.55);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 13px 18px;
+            font-family: var(--font);
+            font-size: 0.97rem;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .accordion-header:hover { background: rgba(80,40,40,0.72); transform: none; }
+
+        .accordion-content {
+            display: none;
+            background: rgba(255,255,255,0.10);
+            border-radius: 0 0 10px 10px;
+            padding: 18px 20px 20px;
+        }
+        .accordion-content p  { margin-bottom: 10px; font-size: 0.93rem; }
+        .accordion-content h4 { margin: 14px 0 6px; font-size: 0.97rem; }
+        .accordion-content ul, .accordion-content ol {
+            margin: 8px 0 10px 20px;
+            line-height: 2;
+            font-size: 0.92rem;
+        }
+
+        /* ── FORMÜL KUTUSU ── */
+        .formula-box {
+            background: rgba(255,255,255,0.20);
+            border: 1px solid var(--white-t40);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 1.05em;
+        }
+
+        /* ── NOT KUTUSU ── */
+        .note-box {
+            background: rgba(255,255,255,0.13);
+            border-left: 4px solid rgba(255,255,255,0.65);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            margin: 10px 0;
+            font-size: 0.91rem;
+        }
+        .note-box strong { display: block; margin-bottom: 3px; }
+
+        /* ── HESAP KUTUSU (accordion içi) ── */
+        .calc-box {
+            background: rgba(255,255,255,0.18);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin: 10px 0;
+        }
+        .calc-box h4 { margin: 0 0 8px; font-size: 0.95rem; }
+
+        /* ── KOD BLOĞU ── */
+        pre {
+            background: rgba(0,0,0,0.30);
+            border-radius: 10px;
+            padding: 14px 16px;
+            overflow-x: auto;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            margin: 10px 0;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+        }
+        code { font-family: 'Courier New', monospace; }
+
+        /* ── ÖZET TABLO ── */
+        .ozet-tablo {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.88rem;
+        }
+        .ozet-tablo th {
+            background: var(--white-t25);
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 2px solid var(--white-t40);
+        }
+        .ozet-tablo td {
+            padding: 7px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.10);
+        }
+        .ozet-tablo tr:hover td { background: rgba(255,255,255,0.07); }
+
+        /* ── BİYOGRAFİ ── */
+        .bio {
+            font-style: italic;
+            color: var(--muted);
+            border-bottom: 1px solid var(--white-t25);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* ── SONUÇ KUTUSU (zayıf asit) ── */
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .result-cell {
+            background: rgba(255,255,255,0.18);
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-align: center;
+        }
+        .result-cell .val { font-size: 1.4rem; font-weight: 700; }
+        .result-cell .lbl { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Linguist's Lab</h1>
-        <p>Akademik Kaynaklı (Harvard, MIT, Oxford) TYT-AYT Bilgi Motoru</p>
-    </header>
+<header>
+    <h1>Kimya ve Matematik İçin Çalışmayı Sevme Planlarım</h1>
+    <p>Akademik Kaynaklı (Harvard, MIT, Oxford) TYT-AYT Bilgi Motoru</p>
+</header>
 
-    <main class="container">
+<main class="container">
 
-        <!-- ===== CHEMISTRY CALCULATOR ===== -->
-        <section class="card">
-            <h2>🧪 Kimyasal Hesaplayıcı</h2>
+    <!-- ══════════════════════════════════════════════════
+         KİMYASAL HESAPLAYICI
+    ══════════════════════════════════════════════════ -->
+    <section class="card">
+        <h2>🧪 Kimyasal Hesaplayıcı</h2>
 
-            <div class="input-group" style="margin-bottom:1rem;">
-                <label>H⁺ Derişimi (mol/L):</label><br>
-                <input type="number" id="h_input" placeholder="Örn: 0.001" step="any">
-                <button onclick="calculatePH()">pH Hesapla</button>
-                <p id="ph_result" class="result"></p>
+        <div class="input-group">
+            <label>Kuvvetli Asit — H⁺ Derişimi (mol/L):</label>
+            <input type="number" id="h_input" placeholder="Örn: 0.001" step="any">
+            <button onclick="hesaplaPH()">pH Hesapla</button>
+            <span id="ph_result" class="result"></span>
+        </div>
+
+        <div class="input-group">
+            <label>Mol Hesaplama (n = m / Mₐ):</label>
+            <input type="number" id="mol_kutle" placeholder="Kütle (g)" step="any">
+            <input type="number" id="mol_ma" placeholder="Mol Kütlesi" step="any">
+            <button onclick="hesaplaMol()">Hesapla</button>
+            <span id="mol_result" class="result"></span>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         MATEMATİK HESAPLAYICILAR
+    ══════════════════════════════════════════════════ -->
+    <section class="grid-2">
+        <div class="card">
+            <h2>📐 Denklem Çözücü (ax + by = c)</h2>
+            <div class="input-row">
+                <input type="number" id="a1" placeholder="a₁"> x +
+                <input type="number" id="b1" placeholder="b₁"> y =
+                <input type="number" id="c1" placeholder="c₁">
             </div>
-
-            <div class="input-group">
-                <label>Mol Hesaplama (n = m / Ma):</label><br>
-                <input type="number" id="mol_kutle" placeholder="Kütle (g)" step="any">
-                <input type="number" id="mol_ma" placeholder="Mol Kütlesi (g/mol)" step="any">
-                <button onclick="calculateMol()">Hesapla</button>
-                <p id="mol_result" class="result"></p>
+            <div class="input-row">
+                <input type="number" id="a2" placeholder="a₂"> x +
+                <input type="number" id="b2" placeholder="b₂"> y =
+                <input type="number" id="c2" placeholder="c₂">
             </div>
-        </section>
+            <button onclick="cozDenklem()">Sistemi Çöz</button>
+            <span id="eq_result" class="result"></span>
+        </div>
 
-        <!-- ===== MATH CALCULATORS ===== -->
-        <section class="content-grid">
-            <div class="card">
-                <h2>📐 Denklem Çözücü (ax + by = c)</h2>
-                <div class="input-row">
-                    <input type="number" id="a1" placeholder="a1"> x +
-                    <input type="number" id="b1" placeholder="b1"> y =
-                    <input type="number" id="c1" placeholder="c1">
+        <div class="card">
+            <h2>📈 Üstel Fonksiyon (aˣ)</h2>
+            <input type="number" id="base" placeholder="Taban (a)" step="any">
+            <input type="number" id="exp_val" placeholder="Üs (x)" step="any">
+            <button onclick="hesaplaUstel()">Hesapla</button>
+            <span id="pow_result" class="result"></span>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         BİLGİ KARTLARI
+    ══════════════════════════════════════════════════ -->
+    <section class="grid-2" style="margin-bottom:1.5rem;">
+        <article class="info-card">
+            <h3>Limit ve Süreklilik</h3>
+            <p>Limit, bir fonksiyonun bir noktaya yaklaşırken ulaştığı eğilimdir. Süreklilik için limitin fonksiyon değerine eşit olması gerekir.</p>
+            <small>Kaynak: MIT OpenCourseWare</small>
+        </article>
+        <article class="info-card">
+            <h3>Asit-Baz Kuramları</h3>
+            <p>Brønsted-Lowry'e göre asit proton veren, baz ise proton alandır. Lewis kuramı elektron çifti transferine odaklanır.</p>
+            <small>Kaynak: Harvard Chemistry</small>
+        </article>
+        <article class="info-card">
+            <h3>Türev ve Teğet Eğimi</h3>
+            <p>Bir eğrinin belirli bir noktasından geçen teğetin eğimi, o noktadaki türeve eşittir.</p>
+            <small>Kaynak: Oxford Mathematics</small>
+        </article>
+        <article class="info-card">
+            <h3>İdeal Gaz Yasası</h3>
+            <p>$PV = nRT$ — Basınç, hacim, mol sayısı ve sıcaklığı bir arada ifade eder. $R = 8{,}314\ \text{J/mol·K}$</p>
+            <small>Kaynak: MIT OpenCourseWare</small>
+        </article>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════
+         AKADEMİK KONU ANLATIMI — ACCORDION
+    ══════════════════════════════════════════════════ -->
+    <section class="card">
+        <h2>📚 Akademik Konu Anlatımları (TYT-AYT)</h2>
+
+        <!-- 1. Trigonometri -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                📐 Trigonometri: Üçgenlerin Gizli Dili <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <p><strong>Basit Örnek:</strong> Bir ağacın boyunu ölçmek istiyorsun ama tepeye çıkamıyorsun. Gölge uzunluğunu ve güneşin açısını biliyorsan <strong>tan(α)</strong> ile hesaplayabilirsin.</p>
+                <p><strong>Akademik Not (MIT):</strong> Birim çember üzerindeki her nokta $(\cos\theta,\ \sin\theta)$ koordinatlarına sahiptir. Pisagor teoremi burada $\sin^2\theta + \cos^2\theta = 1$ olarak karşımıza çıkar.</p>
+            </div>
+        </div>
+
+        <!-- 2. Türev ve İntegral -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                📈 Türev ve İntegral: Değişimin Matematiği <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <div class="bio">Bilim insanı: Augustin-Louis Cauchy (Analizin babası)</div>
+                <p><strong>Türev:</strong> Arabanın o anki hız göstergesidir.</p>
+                <p><strong>İntegral:</strong> Arabanın o ana kadar aldığı toplam yoldur.</p>
+                <p>$x^n$ ifadesinin türevi $n \cdot x^{n-1}$, integrali $\dfrac{x^{n+1}}{n+1} + C$'dir.</p>
+            </div>
+        </div>
+
+        <!-- 3. Kimyasal Bağlar -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                🧪 Kimyasal Bağlar: Atomların Sosyal Hayatı <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <p><strong>İyonik Bağ:</strong> Bir atomun diğerine tamamen elektron vermesidir. Örn: NaCl (Tuz).</p>
+                <p><strong>Kovalent Bağ:</strong> İki atomun elektronu ortaklaşa kullanmasıdır. Örn: H₂O (Su).</p>
+                <p><strong>Akademik Not (Harvard):</strong> Bağın türünü atomlar arasındaki elektronegatiflik farkı belirler.</p>
+            </div>
+        </div>
+
+        <!-- 4. Hız-İşçi-Havuz -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                🚗 Problemler: Hız, İşçi, Havuz <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <p><em>"Birbirine doğru gelme"</em> → Hızları topla ($V_1 + V_2$). &nbsp; <em>"Kovalama"</em> → Hızları çıkar.</p>
+                <div class="calc-box">
+                    <h4>🚗 Hız Hesaplayıcı ($x = v \cdot t$)</h4>
+                    <input type="number" id="yol" placeholder="Yol (x)" step="any">
+                    <input type="number" id="hiz_val" placeholder="Hız (v)" step="any">
+                    <input type="number" id="zaman_val" placeholder="Zaman (t)" step="any">
+                    <button onclick="cozHiz()">Eksik Olanı Bul</button>
+                    <span id="speed_res" class="result"></span>
                 </div>
-                <div class="input-row">
-                    <input type="number" id="a2" placeholder="a2"> x +
-                    <input type="number" id="b2" placeholder="b2"> y =
-                    <input type="number" id="c2" placeholder="c2">
-                </div>
-                <button onclick="solveEquation()">Sistemi Çöz</button>
-                <p id="eq_result" class="result"></p>
-            </div>
-
-            <div class="card">
-                <h2>📈 Üstel Fonksiyon (a^x)</h2>
-                <input type="number" id="base" placeholder="Taban (a)" step="any">
-                <input type="number" id="exp_val" placeholder="Üs (x)" step="any">
-                <button onclick="calculatePower()">Hesapla</button>
-                <p id="pow_result" class="result"></p>
-            </div>
-        </section>
-
-        <!-- ===== INFO CARDS ===== -->
-        <section class="content-grid">
-            <article class="info-card">
-                <h3>Limit ve Süreklilik</h3>
-                <p>Limit, bir fonksiyonun bir noktaya yaklaşırken ulaştığı eğilimdir. Süreklilik için limitin fonksiyon değerine eşit olması gerekir.</p>
-                <small>Kaynak: MIT OpenCourseWare</small>
-            </article>
-            <article class="info-card">
-                <h3>Asit-Baz Kuramları</h3>
-                <p>Brønsted-Lowry'e göre asit proton veren, baz ise proton alandır. Lewis kuramı ise elektron çifti transferine odaklanır.</p>
-                <small>Kaynak: Harvard Chemistry</small>
-            </article>
-            <article class="info-card">
-                <h3>Türev ve Teğet Eğimi</h3>
-                <p>Bir eğrinin üzerindeki belirli bir noktadan geçen teğetin eğimi, fonksiyonun o noktadaki türevine eşittir.</p>
-                <small>Kaynak: Oxford Mathematics</small>
-            </article>
-        </section>
-
-        <!-- ===== ACCORDION: ACADEMIC TOPICS ===== -->
-        <section class="card">
-            <h2>📚 Akademik Konu Anlatımları (TYT-AYT)</h2>
-
-            <div class="accordion-item">
-                <button class="accordion-header" onclick="toggleAccordion(this)">
-                    📐 Trigonometri: Üçgenlerin Gizli Dili <span>+</span>
-                </button>
-                <div class="accordion-content">
-                    <p><strong>Basit Örnek:</strong> Bir ağacın boyunu ölçmek istiyorsun ama tepeye çıkamıyorsun. Gölge uzunluğunu ve güneşin açısını biliyorsan <strong>Tan(α)</strong> ile hesaplayabilirsin.</p>
-                    <p><strong>Akademik Not (MIT):</strong> Birim çember üzerindeki her nokta (cosθ, sinθ) koordinatlarına sahiptir. Pisagor teoremi burada <em>sin²θ + cos²θ = 1</em> olarak karşımıza çıkar.</p>
+                <div class="calc-box">
+                    <h4>👷 İşçi / Havuz Hesaplayıcı</h4>
+                    <input type="text" id="workers" class="wide" placeholder="Süreleri virgülle ayır (örn: 3,6,12)">
+                    <button onclick="cozIsci()">Birlikte Kaç Saatte?</button>
+                    <span id="worker_res" class="result"></span>
                 </div>
             </div>
+        </div>
 
-            <div class="accordion-item">
-                <button class="accordion-header" onclick="toggleAccordion(this)">
-                    📈 Türev ve İntegral: Değişimin Matematiği <span>+</span>
-                </button>
-                <div class="accordion-content">
-                    <div class="bio">Bilim İnsanı: Augustin-Louis Cauchy (Analizin babası)</div>
-                    <p><strong>Türev:</strong> Arabanın o anki hız göstergesidir.</p>
-                    <p><strong>İntegral:</strong> Arabanın o ana kadar aldığı toplam yoldur.</p>
-                    <p><strong>Kural:</strong> xⁿ ifadesinin türevi n·xⁿ⁻¹ iken, integrali (xⁿ⁺¹)/(n+1) + C'dir.</p>
-                </div>
+        <!-- 5. Organik Kimya -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                🌿 Organik Kimya: Karbon Dünyası <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <p><strong>Lego Mantığı:</strong> Karbon her zaman 4 bağ yapar. −OH gelirse Alkol, −COOH gelirse Asit olur.</p>
+                <p><em>Akademik Not:</em> Hibritleşme teorisi molekül geometrisini belirler.</p>
             </div>
+        </div>
 
-            <div class="accordion-item">
-                <button class="accordion-header" onclick="toggleAccordion(this)">
-                    🧪 Kimyasal Bağlar: Atomların Sosyal Hayatı <span>+</span>
-                </button>
-                <div class="accordion-content">
-                    <p><strong>İyonik Bağ:</strong> Bir atomun diğerine tamamen elektron vermesidir. Örn: NaCl (Tuz).</p>
-                    <p><strong>Kovalent Bağ:</strong> İki atomun elektronu ortaklaşa kullanmasıdır. Örn: H₂O (Su).</p>
-                    <p><strong>Akademik Not (Harvard):</strong> Bağın türünü atomlar arasındaki elektronegatiflik farkı belirler.</p>
+        <!-- 6. Logaritma ve pH -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                🔬 Logaritma ve pH İlişkisi <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <h4>1. pH Nedir?</h4>
+                <p>pH kavramı, bir çözeltideki hidrojen iyonu ($H^+$) derişiminin negatif logaritmasıdır:</p>
+                <div class="formula-box">$$pH = -\log_{10}[H^+]$$</div>
+                <p>Logaritma kullanmamızın sebebi, $0{,}0000001$ gibi çok küçük sayıları anlaşılır tam sayılara dönüştürmektir.</p>
+
+                <h4>2. pH Ölçeği</h4>
+                <ul>
+                    <li>$pH &lt; 7$ → Asidik</li>
+                    <li>$pH = 7$ → Nötr (Saf su)</li>
+                    <li>$pH &gt; 7$ → Bazik / Alkali</li>
+                </ul>
+                <div class="note-box">
+                    <strong>⚠️ Logaritmik Ölçek</strong>
+                    pH'da 1 birimlik değişim → derişimde <strong>10 katlık</strong> fark. pH 4, pH 5'ten 10 kat daha asidiktir.
                 </div>
+
+                <h4>3. Hesaplama Örnekleri</h4>
+                <p><strong>Saf Su:</strong> $[H^+] = 10^{-7}$ mol/L</p>
+                <div class="formula-box">$$-\log(10^{-7}) = 7 \quad \text{(Nötr)}$$</div>
+                <p><strong>Mide Asidi:</strong> $[H^+] \approx 10^{-2}$ mol/L</p>
+                <div class="formula-box">$$-\log(10^{-2}) = 2 \quad \text{(Kuvvetli Asit)}$$</div>
+
+                <h4>4. pOH</h4>
+                <div class="formula-box">$$pH + pOH = 14 \quad (25°C)$$</div>
+
+                <h4>Özet Tablo</h4>
+                <table class="ozet-tablo">
+                    <thead><tr><th>Çözelti Türü</th><th>$[H^+]$</th><th>pH</th><th>Örnekler</th></tr></thead>
+                    <tbody>
+                        <tr><td>Kuvvetli Asit</td><td>$10^{-1}$</td><td>1</td><td>Mide Asidi, Tuz Ruhu</td></tr>
+                        <tr><td>Zayıf Asit</td><td>$10^{-4}$</td><td>4</td><td>Domates Suyu, Kahve</td></tr>
+                        <tr><td>Nötr</td><td>$10^{-7}$</td><td>7</td><td>Saf Su, Kan (~7,4)</td></tr>
+                        <tr><td>Zayıf Baz</td><td>$10^{-10}$</td><td>10</td><td>Sabunlu Su, Karbonat</td></tr>
+                        <tr><td>Kuvvetli Baz</td><td>$10^{-13}$</td><td>13</td><td>Çamaşır Suyu</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top:12px;font-size:0.86rem;opacity:0.75;">💡 <em>Linguistik not:</em> "pH"deki "p" Almanca <em>Potenz</em> (güç) kelimesinden gelir — "Hidrojenin Gücü" anlamında.</p>
             </div>
+        </div>
 
-            <div class="accordion-item">
-                <button class="accordion-header" onclick="toggleAccordion(this)">
-                    🚗 Problemler: Hız, İşçi, Havuz <span>+</span>
-                </button>
-                <div class="accordion-content">
-                    <p><strong>Linguist Note:</strong> "Birbirine doğru gelme" = Hızları topla (V₁ + V₂). "Kovalama" = Hızları çıkar.</p>
+        <!-- 7. Kimyasal Denkleştirme ve Denge -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                ⚗️ Kimyasal Denkleştirme, Denge ve pKₐ <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <h4>1. Denkleştirme (Asit-Baz Tepkimeleri)</h4>
+                <p>Sülfürik asit ($H_2SO_4$) ve Sodyum hidroksit ($NaOH$) tepkimesi:</p>
+                <div class="formula-box">$$H_2SO_4 + 2NaOH \rightarrow Na_2SO_4 + 2H_2O$$</div>
+                <div class="note-box">
+                    <strong>📌 Püf Noktası</strong>
+                    Katsayılar sayesinde giren ve çıkan atom sayıları eşitlenir. 4 H girdi → 2 su çıktı.
+                </div>
 
-                    <div class="calc-box">
-                        <h4>🚗 Hız Hesaplayıcı (x = v · t)</h4>
-                        <input type="number" id="yol" placeholder="Yol (x)" step="any">
-                        <input type="number" id="hiz_val" placeholder="Hız (v)" step="any">
-                        <input type="number" id="zaman_val" placeholder="Zaman (t)" step="any">
-                        <button onclick="solveSpeed()">Eksik Olanı Bul</button>
-                        <p id="speed_res" class="result"></p>
+                <h4>2. Kimyasal Denge ve $K_c$</h4>
+                <div class="formula-box">$$aA + bB \rightleftharpoons cC + dD$$</div>
+                <div class="formula-box">$$K_c = \frac{[C]^c \cdot [D]^d}{[A]^a \cdot [B]^b}$$</div>
+                <div class="note-box">
+                    <strong>📌 Kural</strong>
+                    Sadece gazlar ve $(aq)$ maddeler yazılır. Saf katı ve sıvılar yazılmaz.
+                </div>
+
+                <h4>3. Asitlik Sabiti $K_a$ ve pH Bağlantısı</h4>
+                <div class="formula-box">$$CH_3COOH + H_2O \rightleftharpoons CH_3COO^- + H_3O^+$$</div>
+                <div class="formula-box">$$K_a = \frac{[CH_3COO^-][H_3O^+]}{[CH_3COOH]}$$</div>
+                <p>$K_a$ büyükse → daha fazla iyonlaşma → $[H_3O^+]$ artar → pH düşer (daha asidik).</p>
+
+                <h4>4. $pK_a$</h4>
+                <div class="formula-box">$$pK_a = -\log(K_a)$$</div>
+                <div class="note-box">
+                    <strong>🔑 Kritik Bilgi</strong>
+                    $pK_a$ ne kadar küçükse asit o kadar kuvvetlidir.
+                </div>
+                <ol>
+                    <li><strong>Denkleştirme:</strong> Kaç mol asit için kaç mol baz gerektiğini söyler.</li>
+                    <li><strong>$K_a$:</strong> Asidin iyonlaşma "isteğini" ölçer.</li>
+                    <li><strong>$pH$ ve $pK_a$:</strong> Karmaşık derişimleri 1–14 ölçeğine taşır.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 8. Zayıf Asit pH Hesabı (YENİ) -->
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="ac(this)">
+                🧮 Zayıf Asit pH Hesabı — Denge Denklemi ile <span>+</span>
+            </button>
+            <div class="accordion-content">
+                <p>Zayıf asitler suda <strong>tamamen iyonlaşmaz</strong>. Bu yüzden pH hesabı kuvvetli asitler gibi doğrudan yapılamaz; asitlik denge sabiti ($K_a$) devreye girer.</p>
+
+                <h4>Mantık (Adım Adım)</h4>
+                <p>Başlangıç derişimi $C$, iyonlaşan miktar $x$ olsun:</p>
+                <div class="formula-box">$$HA \rightleftharpoons H^+ + A^-$$</div>
+                <p>Dengede: $[H^+] = x$, $[A^-] = x$, $[HA] = C - x$</p>
+                <div class="formula-box">$$K_a = \frac{x^2}{C - x}$$</div>
+                <p>$x \ll C$ ise ihmal edilir → $x \approx \sqrt{K_a \cdot C}$ (yaklaşık). Daha hassas sonuç için ikinci dereceden denklem çözülür:</p>
+                <div class="formula-box">$$x^2 + K_a \cdot x - K_a \cdot C = 0 \implies x = \frac{-K_a + \sqrt{K_a^2 + 4K_aC}}{2}$$</div>
+
+                <h4>Python Kodu</h4>
+                <pre><code>import math
+
+def zayif_asit_ph_hesapla(ka, derisim):
+    # x² + Ka·x − Ka·C = 0
+    a = 1
+    b = ka
+    c = -(ka * derisim)
+
+    delta = (b**2) - (4 * a * c)
+    h_derisimi = (-b + math.sqrt(delta)) / (2 * a)
+    ph = -math.log10(h_derisimi)
+    return h_derisimi, ph
+
+# Örnek: Asetik Asit (Ka = 1.8e-5, C = 0.1 M)
+h_arti, ph = zayif_asit_ph_hesapla(1.8e-5, 0.1)
+print(f"[H+] = {h_arti:.6f} M")
+print(f"pH   = {ph:.2f}")</code></pre>
+
+                <div class="note-box">
+                    <strong>📌 Kodun Kimya Bağlantısı</strong>
+                    <code>math.sqrt(delta)</code> → $x$ (iyonlaşma miktarı) &nbsp;|&nbsp;
+                    <code>math.log10</code> → pH tanımının tam karşılığı
+                </div>
+
+                <h4>Grafik Yorumu</h4>
+                <p><strong>Sol grafik (Derişim vs pH):</strong> Asit seyreldikçe pH yükselir ama değişim logaritmik olduğu için doğrusal değildir.</p>
+                <p><strong>Sağ grafik (Ostwald Seyrelme Kanunu):</strong> Asit ne kadar seyreltilirse, moleküllerin iyonlaşma yüzdesi o kadar artar — toplam asitlik azalır ama "verimlilik" artar.</p>
+
+                <div class="note-box">
+                    <strong>💡 Küçük Bir Not</strong>
+                    Derişimi $10^{-8}$ M'ye çekersen pH asla 7'yi geçemez — o noktada suyun kendi iyonlaşması ($K_{su}$) devreye girer.
+                </div>
+
+                <h4>🔢 Zayıf Asit pH Hesaplayıcı</h4>
+                <div class="calc-box">
+                    <div class="input-group">
+                        <label>$K_a$ (Asitlik Sabiti):</label>
+                        <input type="number" id="ka_input" placeholder="Örn: 0.000018" step="any" style="width:160px;">
                     </div>
-
-                    <div class="calc-box">
-                        <h4>👷 İşçi/Havuz Hesaplayıcı</h4>
-                        <input type="text" id="workers" placeholder="Süreleri virgülle ayır (örn: 3,6,12)" style="width:240px;">
-                        <button onclick="solveWorker()">Birlikte Kaç Saatte?</button>
-                        <p id="worker_res" class="result"></p>
+                    <div class="input-group">
+                        <label>Başlangıç Derişimi C (mol/L):</label>
+                        <input type="number" id="c_input" placeholder="Örn: 0.1" step="any" style="width:160px;">
                     </div>
+                    <button onclick="hesaplaZayifAsit()">pH Hesapla</button>
+                    <div id="zayif_result" style="margin-top:12px;"></div>
                 </div>
             </div>
+        </div>
 
-            <div class="accordion-item">
-                <button class="accordion-header" onclick="toggleAccordion(this)">
-                    🌿 Organik Kimya: Karbon Dünyası <span>+</span>
-                </button>
-                <div class="accordion-content">
-                    <p><strong>Lego Mantığı:</strong> Karbon her zaman 4 bağ yapar. -OH gelirse Alkol, -COOH gelirse Asit olur.</p>
-                    <p><em>Akademik Not:</em> Hibritleşme teorisi molekül geometrisini belirler.</p>
+    </section>
+</main>
+
+<script>
+    /* ── ACCORDION ── */
+    function ac(btn) {
+        const content = btn.nextElementSibling;
+        const isOpen  = content.style.display === "block";
+        content.style.display = isOpen ? "none" : "block";
+        btn.querySelector('span').textContent = isOpen ? "+" : "−";
+        if (!isOpen && window.MathJax) MathJax.typesetPromise([content]);
+    }
+
+    /* ── YARDIMCI ── */
+    async function apiFetch(url) {
+        const r = await fetch(url);
+        return r.json();
+    }
+
+    /* ── PH (kuvvetli asit) ── */
+    async function hesaplaPH() {
+        const h = document.getElementById('h_input').value;
+        if (!h) return;
+        const d = await apiFetch(`/hesapla/ph?h_derisimi=${h}`);
+        document.getElementById('ph_result').textContent =
+            d.detail ? `Hata: ${d.detail}` : `Sonuç: pH = ${d.sonuc}`;
+    }
+
+    /* ── MOL ── */
+    async function hesaplaMol() {
+        const m  = document.getElementById('mol_kutle').value;
+        const ma = document.getElementById('mol_ma').value;
+        if (!m || !ma) return;
+        const d = await apiFetch(`/hesapla/mol?kutle=${m}&ma=${ma}`);
+        document.getElementById('mol_result').textContent =
+            d.detail ? `Hata: ${d.detail}` : `Sonuç: ${d.sonuc} mol`;
+    }
+
+    /* ── DENKLEM ── */
+    async function cozDenklem() {
+        const ids = ['a1','b1','c1','a2','b2','c2'];
+        const vals = ids.map(id => document.getElementById(id).value);
+        if (vals.some(v => !v)) return;
+        const params = new URLSearchParams(Object.fromEntries(ids.map((id,i) => [id, vals[i]])));
+        const d = await apiFetch(`/hesapla/denklem?${params}`);
+        document.getElementById('eq_result').textContent =
+            d.hata ? d.hata : `Çözüm: x = ${d.x},  y = ${d.y}`;
+    }
+
+    /* ── ÜSTEL ── */
+    async function hesaplaUstel() {
+        const b = document.getElementById('base').value;
+        const e = document.getElementById('exp_val').value;
+        if (!b || !e) return;
+        const d = await apiFetch(`/hesapla/ustel?taban=${b}&us=${e}`);
+        document.getElementById('pow_result').textContent =
+            d.detail ? `Hata: ${d.detail}` : `Sonuç: ${d.sonuc}`;
+    }
+
+    /* ── HIZ ── */
+    async function cozHiz() {
+        const x = document.getElementById('yol').value;
+        const v = document.getElementById('hiz_val').value;
+        const t = document.getElementById('zaman_val').value;
+        const dolu = [x,v,t].filter(Boolean).length;
+        if (dolu !== 2) {
+            document.getElementById('speed_res').textContent = "Lütfen tam olarak 2 değer girin.";
+            return;
+        }
+        let url = '/hesapla/hiz?';
+        if (x) url += `yol=${x}&`;
+        if (v) url += `hiz=${v}&`;
+        if (t) url += `zaman=${t}`;
+        const d = await apiFetch(url);
+        document.getElementById('speed_res').textContent =
+            d.detail ? `Hata: ${d.detail}` : `Sonuç: ${d.sonuc} ${d.birim}`;
+    }
+
+    /* ── İŞÇİ / HAVUZ ── */
+    async function cozIsci() {
+        const liste = document.getElementById('workers').value;
+        if (!liste) return;
+        const d = await apiFetch(`/hesapla/isci?kapasite_liste=${encodeURIComponent(liste)}`);
+        document.getElementById('worker_res').textContent =
+            d.detail ? `Hata: ${d.detail}` : `Birlikte bitiş: ${d.sonuc} ${d.birim}`;
+    }
+
+    /* ── ZAYIF ASİT pH ── */
+    async function hesaplaZayifAsit() {
+        const ka = document.getElementById('ka_input').value;
+        const c  = document.getElementById('c_input').value;
+        const el = document.getElementById('zayif_result');
+        if (!ka || !c) { el.textContent = "Lütfen Ka ve derişim değerlerini girin."; return; }
+        const d = await apiFetch(`/hesapla/zayif_asit?ka=${ka}&derisim=${c}`);
+        if (d.detail) { el.textContent = `Hata: ${d.detail}`; return; }
+        el.innerHTML = `
+            <div class="result-grid">
+                <div class="result-cell">
+                    <div class="val">${d.ph_hassas}</div>
+                    <div class="lbl">pH (İkinci dereceden)</div>
                 </div>
-            </div>
-
-            <div class="accordion-item">
-                <button class="accordion-header" onclick="toggleAccordion(this)">
-                    💨 Gazlar: PV = nRT <span>+</span>
-                </button>
-                <div class="accordion-content">
-                    <p>Sıcaklık artarsa gaz tanecikleri daha hızlı hareket eder ve basınç artar. İdeal gaz yasası dört değişkeni bir arada ifade eder: P (basınç), V (hacim), n (mol), T (sıcaklık).</p>
+                <div class="result-cell">
+                    <div class="val">${d.ph_yaklasik}</div>
+                    <div class="lbl">pH (İhmal yöntemi)</div>
                 </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script>
-        // --- Accordion ---
-        function toggleAccordion(btn) {
-            const content = btn.nextElementSibling;
-            content.style.display = content.style.display === "block" ? "none" : "block";
-            btn.querySelector('span').innerText = content.style.display === "block" ? "−" : "+";
-        }
-
-        // --- pH ---
-        async function calculatePH() {
-            const h = document.getElementById('h_input').value;
-            const res = await fetch(`/hesapla/ph?h_derisimi=${h}`);
-            const data = await res.json();
-            document.getElementById('ph_result').innerText = data.detail
-                ? `Hata: ${data.detail}` : `Sonuç: pH = ${data.sonuc}`;
-        }
-
-        // --- Mol ---
-        async function calculateMol() {
-            const m = document.getElementById('mol_kutle').value;
-            const ma = document.getElementById('mol_ma').value;
-            const res = await fetch(`/hesapla/mol?kutle=${m}&ma=${ma}`);
-            const data = await res.json();
-            document.getElementById('mol_result').innerText = data.detail
-                ? `Hata: ${data.detail}` : `Sonuç: ${data.sonuc} mol`;
-        }
-
-        // --- Denklem ---
-        async function solveEquation() {
-            const params = new URLSearchParams({
-                a1: document.getElementById('a1').value,
-                b1: document.getElementById('b1').value,
-                c1: document.getElementById('c1').value,
-                a2: document.getElementById('a2').value,
-                b2: document.getElementById('b2').value,
-                c2: document.getElementById('c2').value
-            });
-            const res = await fetch(`/hesapla/denklem?${params}`);
-            const data = await res.json();
-            document.getElementById('eq_result').innerText = data.hata
-                ? data.hata : `Çözüm: x = ${data.x}, y = ${data.y}`;
-        }
-
-        // --- Üstel ---
-        async function calculatePower() {
-            const b = document.getElementById('base').value;
-            const e = document.getElementById('exp_val').value;
-            const res = await fetch(`/hesapla/ustel?taban=${b}&us=${e}`);
-            const data = await res.json();
-            document.getElementById('pow_result').innerText = data.detail
-                ? `Hata: ${data.detail}` : `Sonuç: ${data.sonuc}`;
-        }
-
-        // --- Hız ---
-        async function solveSpeed() {
-            const x = document.getElementById('yol').value;
-            const v = document.getElementById('hiz_val').value;
-            const t = document.getElementById('zaman_val').value;
-            const filled = [x, v, t].filter(Boolean).length;
-            if (filled !== 2) {
-                document.getElementById('speed_res').innerText = "Lütfen tam olarak 2 değer girin.";
-                return;
-            }
-            let url = `/hesapla/hiz?`;
-            if (x) url += `yol=${x}&`;
-            if (v) url += `hiz=${v}&`;
-            if (t) url += `zaman=${t}`;
-            const res = await fetch(url);
-            const data = await res.json();
-            document.getElementById('speed_res').innerText = data.detail
-                ? `Hata: ${data.detail}` : `Sonuç: ${data.sonuc} ${data.birim}`;
-        }
-
-        // --- İşçi/Havuz ---
-        async function solveWorker() {
-            const list = document.getElementById('workers').value;
-            const res = await fetch(`/hesapla/isci?kapasite_liste=${encodeURIComponent(list)}`);
-            const data = await res.json();
-            document.getElementById('worker_res').innerText = data.detail
-                ? `Hata: ${data.detail}` : `Birlikte bitiş: ${data.sonuc} ${data.birim}`;
-        }
-    </script>
-
+                <div class="result-cell">
+                    <div class="val">${d.iyonlasma_yuzdesi}%</div>
+                    <div class="lbl">İyonlaşma yüzdesi</div>
+                </div>
+                <div class="result-cell">
+                    <div class="val">${d.h_derisimi}</div>
+                    <div class="lbl">[H⁺] mol/L</div>
+                </div>
+            </div>`;
+    }
+</script>
 </body>
 </html>
